@@ -1,0 +1,12 @@
+This is a grap bag of code used as ongoing development of the set of shape
+classes over a period of study in C++
+
+  It and the classes present examples of
+     Inheritance
+     Polymorphism
+     Exception handling
+     Templates
+     Functors
+     Lambda functions
+     builder object instantiation
+
