@@ -8,22 +8,18 @@
 //  Copyright © 2020 colege. All rights reserved.
 //
 
-#include <iostream>
-#include <sstream>
-
 #include "point.hpp"
-
 
 // Point Point Point Point Point Point Point Point Point Point Point Point
 
     int Point::count = 0;   // initialise point counter outside class
 
     // constructors
-    Point::Point(){
-        ref = ++count;
+    Point::Point(): ref(++count){
+        //ref = ++count;
     };
-    Point::Point(float x, float y, std::string n){
-        ref = ++count;
+    Point::Point(float x, float y, std::string n): ref(++count){
+        //ref = ++count;
         X = x;
         Y = y;
         name = n;
@@ -31,10 +27,10 @@
     // copy constructor - not sure about this, trying to avoid the extra object
     // created incrementing count in +operator method assigning to existing oject
     // i.e. C = A + B (which increments Point::count twice)
-    Point::Point(const Point& p){
+    Point::Point(const Point& p): ref(++count){
         X = p.X;
         Y = p.Y;
-        ref = p.ref;
+        //ref = p.ref;
         name = p.name;
     }
     // destructor
@@ -45,16 +41,16 @@
     // getters
     float Point::getX() const { return X;}
     float Point::getY() const { return Y;}
-    int Point::getRef() { return ref;}
-    std::string Point::getName() { return name;}
+    int Point::getRef() const { return ref;}
+    std::string Point::getName() const { return name;}
     
     // setters
-    void Point::setX(float x) {X = x;}
-    void Point::setY(float y) {Y = y;}
-    void Point::setPoint(float x, float y) {X = x; Y = y;}
-    void Point::setName(std::string s) {name = s;}
+    Point* Point::setX(float x) {X = x; return this;}
+    Point* Point::setY(float y) {Y = y; return this;}
+    Point* Point::setPoint(float x, float y) {X = x; Y = y; return this;}
+    Point* Point::setName(std::string s) {name = s; return this;}
 
-    bool Point::same(Point other) {
+    bool Point::same(Point other) const {
         if((this->X == other.getX()) && (this->Y == other.getY())) return true;
     return false;
     }
@@ -156,10 +152,8 @@
             */
 
 
-    
-
 // Vertex Vertex Vertex Vertex Vertex Vertex Vertex Vertex Vertex
 
-    void Vertex::setVertex(float x, float y) {X = x; Y = y;}
+Vertex* Vertex::setVertex(float x, float y) {X = x; Y = y; return this;}
     
 

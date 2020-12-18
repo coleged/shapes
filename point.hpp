@@ -2,7 +2,7 @@
 //  point.hpp
 //  shapes
 //
-//  class   Point, Vertex
+//  class   Point, Vertex class declarations
 //
 //  Created by Ed Cole on 09/12/2020.
 //  Copyright © 2020 colege. All rights reserved.
@@ -12,7 +12,7 @@
 #define point_hpp
 
 #include <iostream>
-
+#include <sstream>
 
 // Point Point Point Point Point Point Point Point Point Point Point Point
 class Point{
@@ -44,16 +44,16 @@ friend class Vertex;
     // getters
     float getX() const;
     float getY() const;
-    int getRef();
-    std::string getName();
+    int getRef() const;
+    std::string getName() const;
     
     // setters
-    void setX(float x);
-    void setY(float y);
-    void setPoint(float x, float y);
-    void setName(std::string s);
+    Point* setX(float x);
+    Point* setY(float y);
+    Point* setPoint(float x, float y);
+    Point* setName(std::string s);
     
-    bool same(Point);
+    bool same(Point) const;
     
     // operators
     // take care using this as it creates a temp object and increments ref count
@@ -62,16 +62,23 @@ friend class Vertex;
     bool const operator==(const Point& p);
     bool const operator!=(const Point& p);
     
-    template <typename T>
-    std::string to_string(const T a_value, const int n);
+    // An alternative to std::to_string() that takes a second param (int)
+    // to define precision for floats - bit of an overkill to template it!!
+    template <typename T> std::string to_string(const T a_value, const int n);
+    
     std::string toString();
     
-    class same_point{
-    public: bool operator() (Point*, Point*);
-    };
+    // Functor binary predicates for soring and duplicate removal of collections
+    // of Point objects. Can use lambdas to do this also.
     class sort_point{
-    public: bool operator() (Point*, Point*);
+        public: bool operator() (Point*, Point*);
     };
+    
+    class same_point{
+        public: bool operator() (Point*, Point*);
+    };
+    
+    
     
 };
 
@@ -81,7 +88,7 @@ class Vertex: public Point{
     // inherit all constructors
     using Point::Point;
     
-    void setVertex(float x, float y);
+    Vertex* setVertex(float x, float y);
     
 };
 
