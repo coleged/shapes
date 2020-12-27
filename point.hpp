@@ -21,7 +21,7 @@ friend class Line;
     
 private:
     
-    static int count;       // Object counter
+    static int count;       // static Object counter
     
     float X;
     float Y;
@@ -39,6 +39,8 @@ friend class Vertex;
     // created incrementing count in +operator method assigning to existing oject
     // i.e. C = A + B (which increments Point::count twice)
     Point(const Point& p);
+    // copy assignment operator
+    Point& operator=(const Point&);
     ~Point();
     
     // getters
@@ -55,7 +57,7 @@ friend class Vertex;
     
     bool same(Point) const;
     
-    // operators
+    // other operators
     // take care using this as it creates a temp object and increments ref count
     // use it in initialisation with assigment i.e. Point NEW = P1 + P2
     Point& operator+(const Point& p);
@@ -77,8 +79,6 @@ friend class Vertex;
     class same_point{
         public: bool operator() (Point*, Point*);
     };
-    
-    
     
 };
 

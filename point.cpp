@@ -27,11 +27,22 @@
     // copy constructor - not sure about this, trying to avoid the extra object
     // created incrementing count in +operator method assigning to existing oject
     // i.e. C = A + B (which increments Point::count twice)
-    Point::Point(const Point& p): ref(++count){
+    Point::Point(const Point& p){
         X = p.X;
         Y = p.Y;
-        //ref = p.ref;
+        ref = p.ref;
         name = p.name;
+    }
+    // copy assignment operator
+    Point& Point::operator=(const Point& p){
+       if (this != &p){
+           std::cout << "In operator=(const Point&)" << std::endl;
+           X = p.X;
+           Y = p.Y;
+           ref = p.ref;
+           name = p.name;
+       }
+       return *this;
     }
     // destructor
     Point::~Point(){

@@ -31,21 +31,22 @@ public:
     };
     
     template <typename SHAPE>   // Shape == Polygon, Triangle, Rectangle, Square
-    SHAPE build(){
+    SHAPE* build(){
         // if vertices = 3 its a triangle
         // if vertices = 3 it's a quad
         // if all angles = 90, it's a rectangle
         // if sides equal its a square
         // rhomboid and parallelagram to consider
-        SHAPE p;
+        //std::cout << "build .. " << std::endl;
+        SHAPE* p;
         try{
-            p =  SHAPE(verts);
+            p  =  new SHAPE(verts);
         }
         catch(InvalidShapeException exc) {
                 std::cout << "Bad Shape geometry " << std::endl;
                 throw InvalidShapeException();
-            }
-            
+        }
+        //std::cout << "...... built " << std::endl;
         return p;
     };
     

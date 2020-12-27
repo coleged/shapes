@@ -14,40 +14,38 @@
 #define Line_hpp
 
 #include "types.hpp"
-#include <stdio.h>
 #include "point.hpp"
 
 class Line{
 private:
     Vertex *A;  // pointer to end Vertex of line
     Vertex *B;
+    
     lineStyle style;
     colorType color;
     lineWeight weight;
     int ref;
     std::string name;
     
-    static int count;
-    
-    
+    static int count;   // line counter for ref generation
     
 public:
-    Line(Vertex& a, Vertex& b, std::string = "no name");
-    Line(float x1, float y1, float x2, float y2, std::string = "no name");
+    Line(Vertex*, Vertex*, std::string = "no name");
+    Line(float&, float&, float&, float&, std::string = "no name");
     
-    Point* getA();
-    Point* getB();
-    int   getRef();
-    std::string to_string();
+    Point* getA() const;
+    Point* getB() const;
+    int   getRef() const;
     
-    double len();
-    double product(Line);
-    double cosAngle(Line);
+    float len() const;             // length of line
+    float product(Line*) const;    // vector product of this and Line*
+    float cosAngle(Line*) const;   // cosine of angle between this and Line*
+    bool   rightAngle(Line*) const; // true if this line is perpendicular with Line*
     
-    std::string toString();
+    std::string toString() const;
     
-    // DEBUG LINES
-    static std::vector<Line> myLines;
+    // DEBUG CODE. non member static collection of all the lines created
+    static std::vector<Line*> allMyLines;
     
 };
 

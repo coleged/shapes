@@ -16,7 +16,7 @@ Polygon::Polygon(std::vector<Vertex*> v){
     mkLines();
 }
 
-float Polygon::perimeter() {
+float Polygon::perimeter(){
     float per = 0;
     
     for(auto l : lines) {
@@ -34,26 +34,26 @@ float Polygon::area(){
     
 }// area()
 
-Shape* Polygon::mkLines(){  // joins the dots bu creating line objects to dowm closed
+Shape* Polygon::mkLines(){  // joins the dots by creating line objects to dowm closed
                             // polygon. scans through the verts vector begin
     Vertex* A = nullptr;
     Vertex* B = nullptr;
     Vertex* F = nullptr;
     Line* L = nullptr;
-    for(auto p : verts){
+    for(const auto& p : verts){
         B = p;
         if (A == nullptr){ // first point
             A = B;
             F = B;
             continue;
         }
-        L = new Line(*A,*B);
-        std::cout << " ** " << L->toString() << std::endl;
+        L = new Line(A,B);
+        //std::cout << " ** " << L->toString() << std::endl;
         lines.push_back(L);
         A = B;
     }
-    L = new Line(*B,*F);
-    std::cout << " ** " << L->toString() << std::endl;
+    L = new Line(B,F); // last line closing the polygon
+    //std::cout << " ** " << L->toString() << std::endl;
     lines.push_back(L);
     
     return (Shape*)this; // or should I use a static_cast ????

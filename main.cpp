@@ -25,6 +25,7 @@
 #include "shape.hpp"
 #include "polygon.hpp"
 #include "triangle.hpp"
+#include "rectangle.hpp"
 #include "exceptions.hpp"
 
 #include "builder.cpp" // shouldn't do this. Just a temp measure while testing Builder Template
@@ -49,8 +50,11 @@ int main(int argc, const char * argv[]) {
     //Point C;      // doing it this was causes an extra Point object and increments
     //C = A + B;    // Point::count by 2. i.e. +1 when C is declared then another
                     // (A + B) which is destoyed when it is assigned to C
-    Point C = A + B;// This way, C is declared and initialised to A + B, so only one object
+    //Point C = A + B;// This way, C is declared and initialised to A + B, so only one object
                     // is created and ref is only incremented once
+    Point& C = A + B;   // This way C is a reference to the temporary Object (scope = main())
+                        
+    
     C.setName("C");
     
     std::cout << "A + B = " << C.getX() << ","
@@ -60,7 +64,7 @@ int main(int argc, const char * argv[]) {
     std::cout << "B " << B.toString() << std::endl;
     
     std::cout << "C " << C.toString() << std::endl;
-    Point D = C + A;
+    Point& D = C + A;
     D.setName("D");
     std::cout << "D " << D.toString() << std::endl;
     
@@ -71,7 +75,7 @@ int main(int argc, const char * argv[]) {
     F.setName("F");
     // create line between A and B
     std::cout << "Create Line" << std::endl;
-    Line l1(A,B);
+    Line l1(&A,&B);
     std::cout << l1.toString() << std::endl;
     std::cout << "check out line A Point" << std::endl;
     std::cout << l1.getA()->toString() << std::endl;
@@ -97,12 +101,12 @@ int main(int argc, const char * argv[]) {
     b->add(v2);
     b->add(v3);
     b->add(v4);
-    Polygon P = b->build<Polygon>();
+    Polygon* P = b->build<Polygon>();
     delete b;
-    P.printData();
+    P->printData();
     Builder* q = new Builder;
-    Polygon P1 = q->add(v1)->add(v2)->add(v3)->add(v4)->build<Polygon>();
-    P1.printData();
+    Polygon* P1 = q->add(v1)->add(v2)->add(v3)->add(v4)->build<Polygon>();
+    P1->printData();
     
     std::cout << "Shapes" << std::endl;
     
@@ -110,7 +114,7 @@ int main(int argc, const char * argv[]) {
     std::vector<Shape> myShapes;
     Triangle* t1;
     try {
-        t1 = new Triangle(v1,v2,v3);
+        t1 = new Triangle(&v1,&v2,&v3);
         t1->setName("Triangle 1");
         myShapes.push_back(*t1);
     }
@@ -121,15 +125,12 @@ int main(int argc, const char * argv[]) {
     t1->printData();
     
     q->init(); // reset builder
-    Polygon p2 =  q->add(v1)->add(v3)->add(v6)->build<Polygon>();
+    Polygon* p2 =  q->add(v1)->add(v3)->add(v6)->build<Polygon>();
     Triangle t2(p2);
     
     // Is there a Triangle Builder
     
-        std::cout << "ALL MY LINES" << std::endl;
-        for( auto line : Line::myLines){
-            std::cout << line.toString() << std::endl;
-        }
+        
     std::cout << "T1 Area " << t1->area() << std::endl;
     std::cout << "T2 Area " << t2.area() << std::endl;
     
@@ -138,22 +139,52 @@ int main(int argc, const char * argv[]) {
     tb->add(v2);
     tb->add(v3);
     tb->add(v4);
-    Polygon t3 = tb->build<Polygon>();
+    Polygon* t3 = tb->build<Polygon>();
+    t3->printData();
     std::cout << "Stand alone builder"  << std::endl;
     Builder* sab = new Builder;
     sab->init();
-    Polygon P3 = sab->add(v1)->add(v2)->add(v3)->add(v4)->build<Polygon>();
-    P3.printData();
+    Polygon* P3 = sab->add(v1)->add(v2)->add(v3)->add(v4)->build<Polygon>();
+    //P3->printData();
     sab->init();
-    
-    Triangle T3;
+    std::cout << "Triangle T3 " << std::endl;
+    Triangle* T3;
+    std::cout << "Triangle T3 " << std::endl;
     try{
         T3 = sab->add(v1)->add(v2)->add(v3)->build<Triangle>();
     }
     catch(InvalidShapeException exc) {
         std::cout << "Triangle - oops: " << std::endl;
     }
-    T3.printData();
+    std::cout << "RECTANGLES" << std::endl;
+    
+    //T3.printData();
+    
+    /*
+    std::cout << "ALL MY LINES" << std::endl;
+    for( auto line : Line::allMyLines){
+        std::cout << line->toString() << std::endl;
+    }
+     */
+    
+    std::cout << "RECTANGLES" << std::endl;
+    
+    //Rectangle R1(&v1,&v2,&v3,&v4);
+    Rectangle* R1;
+    sab->init();
+    
+    Vertex v7(0, 7.1);
+    
+    try{
+    R1 = sab->add(v1)->add(v2)->add(v3)->add(v4)->build<Rectangle>();
+    }catch(InvalidShapeException exc) {
+        std::cout << "Rectangle - oops: " << std::endl;
+    }
+    std::cout << "R1 area:" << R1->area() << std::endl;
+    
+    
+    
+    
    
     return 0;
 }

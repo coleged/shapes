@@ -11,6 +11,10 @@
 #include "shape.hpp"
 
 int Shape::count = 2000;   // initialise Shape counter outside class
+std::vector<Shape*> Shape::allMyShapes;    // initalise
+
+
+Shape::~Shape(){};
 
 Shape* Shape::setName(std::string n){
     name = n;
@@ -18,7 +22,7 @@ Shape* Shape::setName(std::string n){
 };
 
 // getters
-std::string Shape::getName(){
+std::string Shape::getName() const{
     return name;
 };
 
@@ -33,10 +37,20 @@ void Shape::printData(){
     }
 }
 
+float Shape::perimeter(){
+    return 0.0;
+}
+
+float Shape::area(){
+    return 0.0;
+}
 
 
+bool Shape::isValid(){
+    return uniqueVertices();
+}
 
-bool Shape::isValid() {
+bool Shape::uniqueVertices() {
     std::vector<Vertex*> v = verts; // method local copy of verts vector
     
     // sort vector of pointers with a compare predicate using functor
@@ -79,25 +93,10 @@ bool Shape::isValid() {
     return true;
 }
 
-/*
-int compare(Shape to){
-    if( area() < to.area()) return SMALLER;
-    if( area() == to.area()) return SAME;
+
+int Shape::compare(Shape* to){
+    if( area() < to->area()) return SMALLER;
+    if( area() == to->area()) return SAME;
     return LARGER;
 };
- */
 
-/**
- 
-static Shape Shape::mkTriangle( Vertex v1, Vertex v2, Vertex v3) {
-    Triangle t;
-    try {
-    t = new Triangle(v1, v2, v3 );
-    }
-    catch(InvalidShapeException exc) {
-        // re-throw the exception
-        throw new InvalidShapeException();
-    }
-    return t;
-}
- */

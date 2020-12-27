@@ -19,11 +19,12 @@ public:
     
     Triangle();
 
-    Triangle(Vertex&, Vertex&, Vertex&);
+    Triangle(Vertex*, Vertex*, Vertex*);
     Triangle(std::vector<Vertex*>);
-    Triangle(Polygon&);
+    Triangle(Polygon*);
 
-    double area();
+    float area();
+
 };
 
 #endif /* triangle_hpp */

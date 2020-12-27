@@ -17,8 +17,6 @@ class Polygon:  public Shape{
     
 friend class Triangle;
 
-    
-    
    
 public:
     Polygon();
@@ -26,7 +24,7 @@ public:
     Polygon(std::vector<Vertex*>);
     
     float area();
-    float perimeter();
+    float perimeter() final;
     
     Shape* mkLines();
     
