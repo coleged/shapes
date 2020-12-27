@@ -9,4 +9,5 @@ classes over a period of study in C++
      Functors
      Lambda functions
      builder object instantiation
+     copy assignment constructor
 
