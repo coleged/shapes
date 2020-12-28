@@ -49,7 +49,7 @@ float Triangle::area() {
     double area = 1;    // set to 1 because we are using iterative product in for loop
     double per = perimeter()/2;
     for(auto line: lines) {
-        area *= (per - line->len());
+        area *= (per - line.len());
     }
     area = sqrt(per*area);
     

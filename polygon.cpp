@@ -20,7 +20,7 @@ float Polygon::perimeter(){
     float per = 0;
     
     for(auto l : lines) {
-        per += l->len();
+        per += l.len();
     }
     return per;
     
@@ -39,7 +39,6 @@ Shape* Polygon::mkLines(){  // joins the dots by creating line objects to dowm c
     Vertex* A = nullptr;
     Vertex* B = nullptr;
     Vertex* F = nullptr;
-    Line* L = nullptr;
     for(const auto& p : verts){
         B = p;
         if (A == nullptr){ // first point
@@ -47,14 +46,14 @@ Shape* Polygon::mkLines(){  // joins the dots by creating line objects to dowm c
             F = B;
             continue;
         }
-        L = new Line(A,B);
-        //std::cout << " ** " << L->toString() << std::endl;
-        lines.push_back(L);
+        //Line L = new Line(A,B);
+        lines.emplace_back(Line(A,B));
         A = B;
     }
-    L = new Line(B,F); // last line closing the polygon
+    //L = new Line(B,F); // last line closing the polygon
     //std::cout << " ** " << L->toString() << std::endl;
-    lines.push_back(L);
+    //lines.push_back(L);
+    lines.emplace_back(Line(B,F));
     
     return (Shape*)this; // or should I use a static_cast ????
 }

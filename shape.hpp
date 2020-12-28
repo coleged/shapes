@@ -44,7 +44,8 @@ private:
     double              radius; // for Circle
     
     std::vector<Vertex*> verts;  // first element is the origin/anchor
-    std::vector<Line*>   lines;
+    std::vector<Line>   lines;   // vector of line objects, as the shape owns the
+                                 // lines
     
 public:
     

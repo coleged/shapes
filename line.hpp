@@ -25,11 +25,12 @@ private:
     colorType color;
     lineWeight weight;
     int ref;
-    std::string name;
+    std::string name = "no name";
     
     static int count;   // line counter for ref generation
     
 public:
+
     Line(Vertex*, Vertex*, std::string = "no name");
     Line(float&, float&, float&, float&, std::string = "no name");
     
@@ -38,9 +39,9 @@ public:
     int   getRef() const;
     
     float len() const;             // length of line
-    float product(Line*) const;    // vector product of this and Line*
-    float cosAngle(Line*) const;   // cosine of angle between this and Line*
-    bool   rightAngle(Line*) const; // true if this line is perpendicular with Line*
+    float product(Line&) const;    // vector product of this and Line*
+    float cosAngle(Line&) const;   // cosine of angle between this and Line*
+    bool   rightAngle(Line&) const; // true if this line is perpendicular with Line*
     
     std::string toString() const;
     

@@ -12,7 +12,9 @@
 
 
     int Line::count = 1000;   // initialise Line counter outside class
-    std::vector<Line*> Line::allMyLines;    // initalise
+    // cant do this as all lines exist in containers owned by shapes
+    //std::vector<Line*> Line::allMyLines;    // initalise
+
 
     Line::Line(Vertex* a, Vertex* b, std::string n){
         A = a;
@@ -21,7 +23,8 @@
         ref = ++count;
         
         // debug
-        allMyLines.push_back(this);
+        // cant do this as all lines exist in containers owned by shapes
+        //allMyLines.push_back(this);
         
     }
     Line::Line(float& x1, float& y1, float& x2, float& y2, std::string n){
@@ -31,7 +34,8 @@
         ref = ++count;
         
         // debug
-        allMyLines.push_back(this);
+        // cant do this as all lines exist in containers owned by shapes
+        //allMyLines.push_back(this);
     }
 
     Point* Line::getA() const{
@@ -54,25 +58,25 @@
         return len;
     }
 
-    float Line::product(Line* l2) const{
+    float Line::product(Line& l2) const{
     // vector product
-    const float& ret =  (A->getX() - B->getX())*(l2->A->getX() - l2->B->getX()) +
-                  (A->getY() - B->getY())*(l2->A->getY() - l2->B->getY())     ;
+    const float& ret =  (A->getX() - B->getX())*(l2.A->getX() - l2.B->getX()) +
+                  (A->getY() - B->getY())*(l2.A->getY() - l2.B->getY())     ;
     
     return ret;
     }//product()
 
-    float Line::cosAngle(Line* l2) const{
+    float Line::cosAngle(Line& l2) const{
         // vector math shows that the cosine of angle between two vectors
         // is equal to the product of the two vectors divided by the product of
         // there determinants (lengths)
         
-        const float& cosA = product(l2) / (len() * l2->len());
+        const float& cosA = product(l2) / (len() * l2.len());
         
         return cosA;
     }//cosAngle()
 
-    bool Line::rightAngle(Line* l2) const{
+    bool Line::rightAngle(Line& l2) const{
         //std::cout << this->getRef() << "with" << l2->getRef() << std::endl;
         if (cosAngle(l2) == 0) return true;
         return false;

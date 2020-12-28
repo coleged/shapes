@@ -15,11 +15,10 @@
     int Point::count = 0;   // initialise point counter outside class
 
     // constructors
-    Point::Point(): ref(++count){
-        //ref = ++count;
+    Point::Point(){
     };
+
     Point::Point(float x, float y, std::string n): ref(++count){
-        //ref = ++count;
         X = x;
         Y = y;
         name = n;
@@ -30,7 +29,7 @@
     Point::Point(const Point& p){
         X = p.X;
         Y = p.Y;
-        ref = p.ref;
+        ref = ++count;
         name = p.name;
     }
     // copy assignment operator
@@ -46,7 +45,7 @@
     }
     // destructor
     Point::~Point(){
-        //std::cout << "Point destruction warning" << std::endl; // DEBUG
+        std::cout << this->ref << " Point destruction warning " << this->name << std::endl; // DEBUG
     }
     
     // getters
@@ -71,11 +70,11 @@
     // +
     // take care using operator+ as it creates a temp object and increments ref count.
     // use it in initialisation with assigment i.e. Point P3 = P1 + P2
-    Point& Point::operator+(const Point& p){
+    Point* Point::operator+(const Point& p){
         Point* ret = new Point();
         ret->X = X + p.X;
         ret->Y = Y + p.Y;
-        return *ret;
+        return ret;
     }// +
 
     

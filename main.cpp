@@ -16,6 +16,8 @@
 //  Created by colege@gmail.com on 08/12/2020.
 //  Copyright © 2020 colege. All rights reserved.
 //
+// TODO: There are a couple of Points created (currently 0,13 & 14) that are destroyed
+//          when program exits, but it's unclear how these are created
 
 #include <iostream>
 #include <vector>
@@ -52,8 +54,11 @@ int main(int argc, const char * argv[]) {
                     // (A + B) which is destoyed when it is assigned to C
     //Point C = A + B;// This way, C is declared and initialised to A + B, so only one object
                     // is created and ref is only incremented once
-    Point& C = A + B;   // This way C is a reference to the temporary Object (scope = main())
-                        
+    
+   
+    Point C = *(A + B);
+    
+    // C is 9th point created
     
     C.setName("C");
     
@@ -64,12 +69,13 @@ int main(int argc, const char * argv[]) {
     std::cout << "B " << B.toString() << std::endl;
     
     std::cout << "C " << C.toString() << std::endl;
-    Point& D = C + A;
+    Point D = *(C + A);   // 10th point
     D.setName("D");
     std::cout << "D " << D.toString() << std::endl;
     
-    Point E(D);
+    Point E(D); E.setName("E"); // 11th point
     std::cout << "E " << E.toString() << std::endl;
+    // 12th point
     Point F = D;
     std::cout << "F " << F.toString() << std::endl;
     F.setName("F");
@@ -161,11 +167,15 @@ int main(int argc, const char * argv[]) {
     //T3.printData();
     
     /*
+     Cant do this as allMyLines not possibe. Need to iterate thru
+     shapes, which own the line objects within containers
+     
     std::cout << "ALL MY LINES" << std::endl;
     for( auto line : Line::allMyLines){
         std::cout << line->toString() << std::endl;
     }
      */
+    
     
     std::cout << "RECTANGLES" << std::endl;
     

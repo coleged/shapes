@@ -60,7 +60,7 @@ friend class Vertex;
     // other operators
     // take care using this as it creates a temp object and increments ref count
     // use it in initialisation with assigment i.e. Point NEW = P1 + P2
-    Point& operator+(const Point& p);
+    Point* operator+(const Point& p);
     bool const operator==(const Point& p);
     bool const operator!=(const Point& p);
     
